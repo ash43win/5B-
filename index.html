@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Select Cities</title>
+</head>
+<body>
+    <h1>Select a Country and City</h1>
+    
+    <label for="country">Country:</label>
+    <select id="country">
+        <option value="">--Select--</option>
+        <option value="india">India</option>
+        <option value="usa">USA</option>
+    </select>
+
+    <label for="cities">City:</label>
+    <select id="cities">
+        <option value="">--Select a City--</option>
+    </select>
+
+    <script>
+        const countryDropdown = document.getElementById('country');
+        const citiesDropdown = document.getElementById('cities');
+
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                countryDropdown.addEventListener('change', () => {
+                    const cities = data[countryDropdown.value];
+                    citiesDropdown.innerHTML = '<option value="">--Select a City--</option>'; 
+                    cities.forEach(city => {
+                        citiesDropdown.add(new Option(city, city)); 
+                    });
+                    alert(`Country selected: ${countryDropdown.value}. Cities loaded successfully!`);
+                });
+            });
+    </script>
+</body>
+</html>
+
